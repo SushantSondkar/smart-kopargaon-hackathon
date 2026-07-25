@@ -1,14 +1,13 @@
-mandi,distance_km_from_kopargaon,adat_pct,hamali_per_qtl,tolai_per_qtl,source,verified
-KOPARGAON,0,4.0,8,3,ASSUMED - typical Maharashtra APMC rates,NO
-RAHATA,20,4.0,8,3,Google Maps (verified),YES-distance only
-SANGAMNER,54,4.0,8,3,Google Maps (verified),YES-distance only
-LASALGAON,50,5.0,8,3,Google Maps (verified),YES-distance only
-LASALGAON(NIPHAD),53,5.0,8,3,ASSUMED - near Lasalgaon,NO
-LASALGAON(VINCHUR),55,5.0,8,3,ASSUMED - near Lasalgaon,NO
-PIMPALGAON BASWANT,72,5.0,8,3,Google Maps (verified),YES-distance only
-PIMPALGAON BASWANT(SAYKHEDA),75,5.0,8,3,ASSUMED - near Pimpalgaon Baswant,NO
-YEOLA,20,4.5,8,3,Google Maps (verified),YES-distance only
-MANMAD,45,4.5,8,3,Google Maps (verified),YES-distance only
-NANDGAON,50,4.5,8,3,ASSUMED - near Manmad,NO
-VAIJAPUR,70,4.0,8,3,ASSUMED - typical Maharashtra APMC rates,NO
-
+mandi,distance_km_from_kopargaon,distance_verified,adat_pct_low,adat_pct_typical,adat_pct_high,hamali_per_qtl_low,hamali_per_qtl_typical,hamali_per_qtl_high,tolai_per_qtl_low,tolai_per_qtl_typical,tolai_per_qtl_high,rate_source
+KOPARGAON,0,YES,4.0,5.0,6.5,6,8,12,2,3,5,ASSUMED - typical Maharashtra APMC range - pending verification
+RAHATA,20,YES,4.0,5.0,6.5,6,8,12,2,3,5,ASSUMED - typical Maharashtra APMC range - pending verification
+SANGAMNER,54,YES,4.0,5.0,6.5,6,8,12,2,3,5,ASSUMED - typical Maharashtra APMC range - pending verification
+LASALGAON,50,YES,4.5,5.5,6.5,6,8,12,2,3,5,ASSUMED - typical Maharashtra APMC range - pending verification
+LASALGAON(NIPHAD),53,NO-near Lasalgaon,4.5,5.5,6.5,6,8,12,2,3,5,ASSUMED - typical Maharashtra APMC range - pending verification
+LASALGAON(VINCHUR),55,NO-near Lasalgaon,4.5,5.5,6.5,6,8,12,2,3,5,ASSUMED - typical Maharashtra APMC range - pending verification
+PIMPALGAON BASWANT,72,YES,4.5,5.5,6.5,6,8,12,2,3,5,ASSUMED - typical Maharashtra APMC range - pending verification
+PIMPALGAON BASWANT(SAYKHEDA),75,NO-near Pimpalgaon Baswant,4.5,5.5,6.5,6,8,12,2,3,5,ASSUMED - typical Maharashtra APMC range - pending verification
+YEOLA,20,YES,4.0,5.0,6.5,6,8,12,2,3,5,ASSUMED - typical Maharashtra APMC range - pending verification
+MANMAD,45,YES,4.0,5.0,6.5,6,8,12,2,3,5,ASSUMED - typical Maharashtra APMC range - pending verification
+NANDGAON,50,NO-near Manmad,4.0,5.0,6.5,6,8,12,2,3,5,ASSUMED - typical Maharashtra APMC range - pending verification
+VAIJAPUR,70,NO,4.0,5.0,6.5,6,8,12,2,3,5,ASSUMED - typical Maharashtra APMC range - pending verification

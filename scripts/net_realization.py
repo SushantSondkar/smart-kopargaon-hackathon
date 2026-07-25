@@ -27,6 +27,7 @@ FORMULA (documented so it's easy to defend on stage):
 """
 
 import pandas as pd
+from glut_indicator import build_glut_indicator
 
 # Assumed - typical rate for tractor-trolley/mini-truck hire in this belt.
 # VERIFY before demo: call a transporter or APMC office.
@@ -35,6 +36,37 @@ TRANSPORT_RATE_PER_KM_PER_QTL = 2.0
 
 MAX_STALENESS_DAYS = 21  # a price older than this vs the anchor date is not
                           # a fair same-day comparison - excluded, not silently used
+
+
+def get_market_condition_level(mandi):
+    """
+    Your APMC contact confirmed adat/hamali/tolai rates vary with market
+    conditions - the EXACT rate isn't in any dataset (it's a private
+    farmer-agent transaction, never centrally recorded by Agmarknet).
+
+    What we CAN do: use the glut indicator (separately validated - HIGH_
+    SUPPLY days really do precede price drops) as a proxy for negotiating
+    leverage. More onions arriving -> more competition among sellers ->
+    agents likely lean toward the HIGH end of the cost range. Scarcity ->
+    agents compete for sellers -> likely LOW end.
+
+    THIS PICKS A POINT WITHIN AN ALREADY-ASSUMED RANGE USING A REAL,
+    VALIDATED SIGNAL. It is a reasonable assumption about how APMC
+    economics typically work, NOT a proven relationship, and NOT a
+    substitute for confirming actual rates with an APMC contact.
+
+    Falls back to 'typical' if this mandi has no arrival data.
+    """
+    try:
+        glut = build_glut_indicator(mandi)
+        if glut.empty:
+            return 'typical', None
+        latest_flag = glut.sort_values('date').iloc[-1]['supply_flag']
+        mapping = {'HIGH_SUPPLY': 'high', 'LOW_SUPPLY': 'low',
+                   'NORMAL': 'typical', 'INSUFFICIENT_HISTORY': 'typical'}
+        return mapping.get(latest_flag, 'typical'), latest_flag
+    except (FileNotFoundError, KeyError):
+        return 'typical', None
 
 
 def load_latest_prices():
@@ -101,15 +133,36 @@ def compute_net_realization(qty_quintals):
         prices.loc[prices.mandi == 'KOPARGAON', 'date'] = kop_date
 
     m = pd.merge(prices, costs, on='mandi', how='inner')
-
     m['gross'] = qty_quintals * m['price_per_qtl']
-    m['adat_cost'] = m['gross'] * (m['adat_pct'] / 100)
-    m['hamali_cost'] = qty_quintals * m['hamali_per_qtl']
-    m['tolai_cost'] = qty_quintals * m['tolai_per_qtl']
-    m['transport_cost'] = m['distance_km_from_kopargaon'] * TRANSPORT_RATE_PER_KM_PER_QTL * qty_quintals
-    m['total_deductions'] = m['adat_cost'] + m['hamali_cost'] + m['tolai_cost'] + m['transport_cost']
-    m['net'] = m['gross'] - m['total_deductions']
+
+    # Rates vary with market conditions (confirmed by APMC contact) - so we
+    # compute LOW/TYPICAL/HIGH net realization, same P10/P50/P90 discipline
+    # used for the price forecast, rather than pretending costs are fixed.
+    for level in ['low', 'typical', 'high']:
+        adat_cost = m['gross'] * (m[f'adat_pct_{level}'] / 100)
+        hamali_cost = qty_quintals * m[f'hamali_per_qtl_{level}']
+        tolai_cost = qty_quintals * m[f'tolai_per_qtl_{level}']
+        transport_cost = m['distance_km_from_kopargaon'] * TRANSPORT_RATE_PER_KM_PER_QTL * qty_quintals
+        m[f'net_{level}'] = m['gross'] - adat_cost - hamali_cost - tolai_cost - transport_cost
+
+    # Headline "net" = glut-aware pick within the range, not always 'typical'.
+    # On a HIGH_SUPPLY day at that mandi, lean toward the high-cost (lower
+    # net) scenario; on LOW_SUPPLY, lean toward the low-cost (higher net)
+    # scenario. See get_market_condition_level() docstring for the caveat.
+    condition_levels, condition_flags = [], []
+    for mandi in m['mandi']:
+        level, flag = get_market_condition_level(mandi)
+        condition_levels.append(level)
+        condition_flags.append(flag)
+    m['market_condition'] = condition_flags
+    m['net'] = [row[f'net_{lvl}'] for row, lvl in zip(m.to_dict('records'), condition_levels)]
+
+    _low_raw = m['net_low'].copy()
+    _high_raw = m['net_high'].copy()
+    m['net_low'] = pd.concat([_low_raw, _high_raw], axis=1).min(axis=1)    # worst case (highest costs)
+    m['net_high'] = pd.concat([_low_raw, _high_raw], axis=1).max(axis=1)   # best case (lowest costs)
     m['net_per_qtl'] = m['net'] / qty_quintals
+    m['total_deductions'] = m['gross'] - m['net']
 
     m = m.sort_values('net', ascending=False).reset_index(drop=True)
     m['rank_by_net'] = m.index + 1
@@ -128,16 +181,19 @@ if __name__ == '__main__':
     print("=" * 90)
     print(f"NET REALIZATION COMPARISON - {QTY} quintals of onion, all 12 catchment mandis")
     print("=" * 90)
-    print("NOTE: cost rates are ASSUMED placeholders pending APMC verification (see cost_params.csv)")
+    print("NOTE: cost RANGES are ASSUMED placeholders pending APMC verification.")
+    print("      The headline 'net' picks a point in that range based on each mandi's")
+    print("      current supply signal (glut_indicator.py) - an assumption about")
+    print("      market behavior, not a proven or verified rate. See docstring.")
     print()
 
     result = compute_net_realization(QTY)
 
     display = result[['mandi', 'date', 'price_per_qtl', 'distance_km_from_kopargaon',
-                       'total_deductions', 'net', 'net_per_qtl',
+                       'market_condition', 'net_low', 'net', 'net_high', 'net_per_qtl',
                        'rank_by_net', 'rank_by_gross']].copy()
     display['date'] = display['date'].dt.date
-    for col in ['price_per_qtl', 'total_deductions', 'net', 'net_per_qtl']:
+    for col in ['price_per_qtl', 'net_low', 'net', 'net_high', 'net_per_qtl']:
         display[col] = display[col].round(0).astype(int)
 
     print(display.to_string(index=False))

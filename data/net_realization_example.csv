@@ -1,13 +1,13 @@
-mandi,date,price_per_qtl,distance_km_from_kopargaon,adat_pct,hamali_per_qtl,tolai_per_qtl,source,verified,gross,adat_cost,hamali_cost,tolai_cost,transport_cost,total_deductions,net,net_per_qtl,rank_by_net,rank_by_gross,rank_jump
-PIMPALGAON BASWANT,2026-05-05,1200.0,72,5.0,8,3,Google Maps (verified),YES-distance only,48000.0,2400.0,320,120,5760.0,8600.0,39400.0,985.0,1,1,0
-LASALGAON,2026-05-05,1150.0,50,5.0,8,3,Google Maps (verified),YES-distance only,46000.0,2300.0,320,120,4000.0,6740.0,39260.0,981.5,2,2,0
-KOPARGAON,2026-04-25,1008.1321306401268,0,4.0,8,3,ASSUMED - typical Maharashtra APMC rates,NO,40325.28522560507,1613.0114090242027,320,120,0.0,2053.0114090242027,38272.27381658086,956.8068454145216,3,7,4
-LASALGAON(NIPHAD),2026-05-05,1100.0,53,5.0,8,3,ASSUMED - near Lasalgaon,NO,44000.0,2200.0,320,120,4240.0,6880.0,37120.0,928.0,4,3,-1
-YEOLA,2026-05-04,1025.0,20,4.5,8,3,Google Maps (verified),YES-distance only,41000.0,1845.0,320,120,1600.0,3885.0,37115.0,927.875,5,6,1
-LASALGAON(VINCHUR),2026-05-05,1100.0,55,5.0,8,3,ASSUMED - near Lasalgaon,NO,44000.0,2200.0,320,120,4400.0,7040.0,36960.0,924.0,6,4,-2
-MANMAD,2026-05-05,1025.0,45,4.5,8,3,Google Maps (verified),YES-distance only,41000.0,1845.0,320,120,3600.0,5885.0,35115.0,877.875,7,5,-2
-PIMPALGAON BASWANT(SAYKHEDA),2026-05-05,980.0,75,5.0,8,3,ASSUMED - near Pimpalgaon Baswant,NO,39200.0,1960.0,320,120,6000.0,8400.0,30800.0,770.0,8,8,0
-RAHATA,2026-04-24,800.0,20,4.0,8,3,Google Maps (verified),YES-distance only,32000.0,1280.0,320,120,1600.0,3320.0,28680.0,717.0,9,11,2
-NANDGAON,2026-05-04,850.0,50,4.5,8,3,ASSUMED - near Manmad,NO,34000.0,1530.0,320,120,4000.0,5970.0,28030.0,700.75,10,9,-1
-SANGAMNER,2026-05-05,838.0,54,4.0,8,3,Google Maps (verified),YES-distance only,33520.0,1340.8,320,120,4320.0,6100.8,27419.2,685.48,11,10,-1
-VAIJAPUR,2026-05-05,800.0,70,4.0,8,3,ASSUMED - typical Maharashtra APMC rates,NO,32000.0,1280.0,320,120,5600.0,7320.0,24680.0,617.0,12,12,0
+mandi,date,price_per_qtl,distance_km_from_kopargaon,distance_verified,adat_pct_low,adat_pct_typical,adat_pct_high,hamali_per_qtl_low,hamali_per_qtl_typical,hamali_per_qtl_high,tolai_per_qtl_low,tolai_per_qtl_typical,tolai_per_qtl_high,rate_source,gross,net_low,net_typical,net_high,market_condition,net,net_per_qtl,total_deductions,rank_by_net,rank_by_gross,rank_jump
+PIMPALGAON BASWANT,2026-05-05,1200.0,72,YES,4.5,5.5,6.5,6,8,12,2,3,5,ASSUMED - typical Maharashtra APMC range - pending verification,48000.0,38440.0,39160.0,39760.0,LOW_SUPPLY,39760.0,994.0,8240.0,1,1,0
+LASALGAON,2026-05-05,1150.0,50,YES,4.5,5.5,6.5,6,8,12,2,3,5,ASSUMED - typical Maharashtra APMC range - pending verification,46000.0,38330.0,39030.0,39610.0,NORMAL,39030.0,975.75,6970.0,2,2,0
+KOPARGAON,2026-04-25,1008.1321306401268,0,YES,4.0,5.0,6.5,6,8,12,2,3,5,ASSUMED - typical Maharashtra APMC range - pending verification,40325.28522560507,37024.14168594074,37869.020964324816,38392.27381658086,NORMAL,37869.020964324816,946.7255241081205,2456.264261280252,3,7,4
+LASALGAON(NIPHAD),2026-05-05,1100.0,53,NO-near Lasalgaon,4.5,5.5,6.5,6,8,12,2,3,5,ASSUMED - typical Maharashtra APMC range - pending verification,44000.0,36220.0,36900.0,37460.0,LOW_SUPPLY,37460.0,936.5,6540.0,4,3,-1
+YEOLA,2026-05-04,1025.0,20,YES,4.0,5.0,6.5,6,8,12,2,3,5,ASSUMED - typical Maharashtra APMC range - pending verification,41000.0,36055.0,36910.0,37440.0,NORMAL,36910.0,922.75,4090.0,5,6,1
+LASALGAON(VINCHUR),2026-05-05,1100.0,55,NO-near Lasalgaon,4.5,5.5,6.5,6,8,12,2,3,5,ASSUMED - typical Maharashtra APMC range - pending verification,44000.0,36060.0,36740.0,37300.0,NORMAL,36740.0,918.5,7260.0,6,4,-2
+MANMAD,2026-05-05,1025.0,45,YES,4.0,5.0,6.5,6,8,12,2,3,5,ASSUMED - typical Maharashtra APMC range - pending verification,41000.0,34055.0,34910.0,35440.0,LOW_SUPPLY,35440.0,886.0,5560.0,7,5,-2
+PIMPALGAON BASWANT(SAYKHEDA),2026-05-05,980.0,75,NO-near Pimpalgaon Baswant,4.5,5.5,6.5,6,8,12,2,3,5,ASSUMED - typical Maharashtra APMC range - pending verification,39200.0,29972.0,30604.0,31116.0,LOW_SUPPLY,31116.0,777.9,8084.0,8,8,0
+RAHATA,2026-04-24,800.0,20,YES,4.0,5.0,6.5,6,8,12,2,3,5,ASSUMED - typical Maharashtra APMC range - pending verification,32000.0,27640.0,28360.0,28800.0,NORMAL,28360.0,709.0,3640.0,9,11,2
+NANDGAON,2026-05-04,850.0,50,NO-near Manmad,4.0,5.0,6.5,6,8,12,2,3,5,ASSUMED - typical Maharashtra APMC range - pending verification,34000.0,27110.0,27860.0,28320.0,LOW_SUPPLY,28320.0,708.0,5680.0,10,9,-1
+SANGAMNER,2026-05-05,838.0,54,YES,4.0,5.0,6.5,6,8,12,2,3,5,ASSUMED - typical Maharashtra APMC range - pending verification,33520.0,26341.2,27084.0,27539.2,NORMAL,27084.0,677.1,6436.0,11,10,-1
+VAIJAPUR,2026-05-05,800.0,70,NO,4.0,5.0,6.5,6,8,12,2,3,5,ASSUMED - typical Maharashtra APMC range - pending verification,32000.0,23640.0,24360.0,24800.0,,24360.0,609.0,7640.0,12,12,0
